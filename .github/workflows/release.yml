@@ -33,11 +33,13 @@ jobs:
           $plugin_dll = Get-ChildItem *.dll -Recurse | Select-Object -First 1 -ExpandProperty FullName
           $plugin_dll = $plugin_dll.Replace((Resolve-Path ".").Path + "\", "")
           $plugin_dll = $plugin_dll.Replace("\", "/")
-          echo "plugin_dll=$plugin_dll" >> $env:GITHUB_ENV
-          echo "Found plugin path: $plugin_dll"
+          $plugin_asi = $plugin_dll.Replace(".dll", ".asi")
+          mv $plugin_dll $plugin_asi
+          echo "plugin_asi=$plugin_asi" >> $env:GITHUB_ENV
+          echo "Found plugin path: $plugin_asi"
 
       - name: Upload plugin
         uses: softprops/action-gh-release@v2
         with:
           body_path: changelog.md
-          files: ${{ env.plugin_dll }}
+          files: ${{ env.plugin_asi }}
