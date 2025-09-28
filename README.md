@@ -1,83 +1,30 @@
-# Introduction
+# Gothic 2 Night of The Raven: MultiProcess
 
-This project serves as a starting point for creating a union plugin for the following Gothic games:
-- [Gothic I](https://gothic.fandom.com/wiki/Gothic_1)
-- [Gothic Sequel](https://gothic.fandom.com/wiki/Gothic_Sequel)
-- [Gothic II](https://en.wikipedia.org/wiki/Gothic_II)
-- [Gothic II Night of The Raven](https://en.wikipedia.org/wiki/Gothic_II:_Night_of_the_Raven).
+This plugin allows to run the game in more than one instance.   
+It can be really useful for debugging and testing multiplayer modifications.
 
-It provides a preconfigured base code designed to simplify the development process and help you focus on building new features for your plugin.
+**NOTE!** This plugin works only with `Gothic 2 Night of the Raven` with `2.6 fix`.
 
-# Requirements
+## How to use
 
-Before you start making your own plugin, you need to install some software first, here's a full list of things that you'll need to install to be able to build the union plugin:
-- [git](https://git-scm.com/) **Required** for version control and to clone the project repository
-- [CMake](https://cmake.org/) **Optional** if you plan to use Visual Studio
-- [Visual Studio](https://visualstudio.microsoft.com/pl/) **Essential** for compiling the plugin using the MSVC toolset  
-	(make sure to install **C++ Workload** and **CMake Tools for Visual Studio**)
+**_NOTE:_** At this moment the plugins doesn't work with Union.  
 
-The Union plugin requires the MSVC toolset for compatibility, so alternative toolchains like MinGW are not supported.
+You need an ASI Loader to use this mod:
 
-# Fetching the source code
+1. Rename `game/system/binkw32.dll` to `game/system/binkw32hooked.dll`. 
+2. Download [Ultimate ASI Loader for binkw32.dll](https://github.com/user-attachments/files/22582498/binkw32.zip) and unpack it in `game/system` directory. 
 
-1. Make sure to clone the your project repository recursively (to fetch all of the [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules)).  
-2. You can achieve this by typing this command in your terminal: 
-```git 
-git clone --recursive URL_TO_YOUR_REPO
-```
+To install the plugin, you have to:
 
-# Configuration
+1. [Download](https://github.com/Patrix9999/MultiProcess/releases) a release.
+2. Create `game/system/plugins` subfolder and unpack the file into it.
+3. Start the game. The plugin will load automatically.
 
-All of the plugin configuration is located in **REPO_ROOT/CMakeLists.txt**.  
-Some of the common things that you should propably change are:
-- **project name** (this is also setting the name of your plugin dll)  
-	default value is **UnionPlugin**
-- **project version**  
-	default value is **1.0.0.0**
+To uninstall the plugin remove `MultiProcess.asi` from your `plugins` directory. 
 
-# Building
+# Contribute
 
-Follow the steps below to compile the plugin:
+The official repository of this project is available at: https://github.com/Patrix9999/MultiProcess
 
-## Step 1: Open the Project in Visual Studio
-
-1. Navigate to the root directory of your repository.
-2. Right-click on the folder's content (without selecting any files or subfolders).
-3. Select **Open with Visual Studio** from the context menu.
-
-## Step 2: Choose a Configuration
-
-1. In Visual Studio, locate the Solution Configurations dropdown menu in the top toolbar.
-2. Select the desired configuration for your build
-
-## Step 3: Pick the Startup Project
-
-1. In Visual Studio, locate the Solution Startup Item dropdown menu in the top toolbar.
-2. Select your plugin from dropdown list
-
-### Step 4: Build the plugin
-
-1. Once everything is configured, click **Build Solution** (or press **Ctrl+Shift+B**).
-2. If you've configured everything correctly, the build process should complete successfully.
-
-# Plugin installation
-
-Once the plugin has been compiled successfully, you can tell the game to load it during startup by placing it in `System/autorun` subdirectory.
-
-To do that copy the plugin:  
-**from**: `REPO_ROOT/out/build/YOUR_CONFIGURATION/YOUR_PROJECT_NAME.dll`  
-**to**: `GAME_ROOT/System/autorun/`
-
-You can also create a symbolic link for your dll in `System/autorun` subdirectory, that way you won't be forced to copy the plugin dll each time while you compile a new version of your plugin.  
-On Windows you can use [Link Shell Extension](https://schinagl.priv.at/nt/hardlinkshellext/linkshellextension.html) that allows you to create symlinks from file context menu.
-
-# Publishing plugin
-
-This project provides [github action](https://github.com/features/actions) for compiling and releasing a new version of your plugin via github.  
-
-Before you publish a new release, make sure to set a new version in **CMakeLists.txt**, and document your changes in **CHANGELOG.md** file. I recommend updating your changelog file regularly during the development of your plugin, to not forget about adding this later.
-
-To publish a new version of your plugin you just need to create a new [github release](https://github.com/Patrix9999/union-plugin-template/releases).  
-I recommend naming your release by using your plugin version.
-
-And that's it, when plugin will be built successfully it will automatically be added as release asset to the newest release. By default CI/CD script is using the **MP-Release** configuration, depending on your plugin requirements you might want to change this, to match your plugin supported platform(s).
+Compile it yourself
+Download Visual Studio 2017 or newer with the C++ workload. The project is configured to build it with the Windows 10 compatible v142 toolchain. However, you should be able to change the toolchain to whatever you like. No additional libraries are required so it should compile out of the box.
