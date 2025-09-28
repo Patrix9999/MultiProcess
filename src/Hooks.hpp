@@ -41,10 +41,10 @@ namespace GOTHIC_NAMESPACE
 
 	// Apply IAT hooks, this must be done here, because when dll gets injected, the hInstApp is set to nullptr, so we can't construct a valid hook
 	static int WINAPI Hook_WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd);
-	auto Ivk_WinMain = Union::CreateHook(reinterpret_cast<void*>(zSwitch(0x004F3E10, 0x00506810, 0x005000F0, 0x00502D70)), &Hook_WinMain, Union::HookType::Hook_Detours);
+	auto Ivk_WinMain = CreateHook(reinterpret_cast<void*>(zSwitch(0x004F3E10, 0x00506810, 0x005000F0, 0x00502D70)), &Hook_WinMain);
 	static int WINAPI Hook_WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 	{
-		Ivk_WinMain.Disable();
+		Ivk_WinMain.Detach();
 
 		Ivk_SetWindowLongA.Attach(hInstance);
 		Ivk_CreateWindowExA.Attach(hInstance);
@@ -53,12 +53,13 @@ namespace GOTHIC_NAMESPACE
 	}
 
 	static LRESULT CALLBACK Hook_AppWndProc(HWND hwnd, DWORD msg, WPARAM wParam, LPARAM lParam);
+	auto AppWndProc_Original = (LRESULT(CALLBACK*)(HWND, zUWORD, WPARAM, LPARAM))zSwitch(0x004F4EE0, 0x005078E0, 0x00500A80, 0x00503770);
 	auto Ivk_AppWndProc = Union::CreateHook(reinterpret_cast<void*>(zSwitch(0x004F4EE0, 0x005078E0, 0x00500A80, 0x00503770)), &Hook_AppWndProc, Union::HookType::Hook_Detours);
 	static LRESULT CALLBACK Hook_AppWndProc(HWND hwnd, DWORD msg, WPARAM wParam, LPARAM lParam)
 	{
 		Ivk_AppWndProc.Disable();
 
-		LRESULT result = Ivk_AppWndProc(hwnd, msg, wParam, lParam);
+		LRESULT result = AppWndProc_Original(hwnd, msg, wParam, lParam);
 
 		// Handle closing game by right-clicking on the game on task bar and choosing `close window` option
 		if (msg == WM_SYSCOMMAND && wParam == SC_CLOSE)
