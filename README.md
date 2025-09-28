@@ -1,9 +1,7 @@
-# Gothic 2 Night of The Raven: MultiProcess
+# MultiProcess
 
-This plugin allows to run the game in more than one instance.   
+This plugin allows to run the gothic games in more than one instance.   
 It can be really useful for debugging and testing multiplayer modifications.
-
-**NOTE!** This plugin works only with `Gothic 2 Night of the Raven` with `2.6 fix`.
 
 ## How to use
 
