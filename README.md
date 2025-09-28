@@ -12,7 +12,7 @@ It can be really useful for debugging and testing multiplayer modifications.
 You need an ASI Loader to use this mod:
 
 1. Rename `game/system/binkw32.dll` to `game/system/binkw32hooked.dll`. 
-2. Download [Ultimate ASI Loader for binkw32.dll](https://github.com/user-attachments/files/22582498/binkw32.zip) and unpack it in `game/system` directory. 
+2. Download [Ultimate ASI Loader for binkw32.dll](https://github.com/user-attachments/files/22582869/binkw32.zip) and unpack it in `game/system` directory. 
 
 To install the plugin, you have to:
 
