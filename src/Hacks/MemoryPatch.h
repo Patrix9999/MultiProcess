@@ -3,11 +3,9 @@
 #include <cstring>
 #include <vector>
 #include <functional>
-#include <string>
 #include <windows.h>
 
 #include "UNTYPED.h"
-#include <sstream>
 
 class MemoryPatch
 {
@@ -39,10 +37,6 @@ protected:
 public:
 	MemoryPatch(const untyped target, std::vector<BYTE> bytes, std::function<bool()> conditionCallback = nullptr)
 	{
-		std::stringstream ss;
-		ss << "Target address: " << target;
-		MessageBoxA(0, ss.str().c_str(), "MemoryPatch", 0);
-
 		if (!conditionCallback || (conditionCallback && conditionCallback()))
 			Apply(target, &bytes[0], bytes.size());
 	};
