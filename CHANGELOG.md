@@ -1,1 +1,1 @@
-- Added support for multiplatform builds (every gothic can now use this plugin)
+- Fixed IAT Hooks not working at all (due to not passing valid HANDLE to current process)
