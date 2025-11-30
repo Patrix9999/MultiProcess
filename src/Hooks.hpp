@@ -19,7 +19,7 @@ namespace GOTHIC_NAMESPACE
 
 	// Remove WS_SYSMENU flag while setting a game window style
 	static LONG __stdcall IAT_SetWindowLongA(HWND hWnd, int nIndex, LONG dwNewLong);
-	auto Ivk_SetWindowLongA = CreateIATHook(GetModuleHandle(nullptr), "user32.dll", "SetWindowLongA", &IAT_SetWindowLongA);
+	auto Ivk_SetWindowLongA = CreateIATHook(nullptr, "user32.dll", "SetWindowLongA", &IAT_SetWindowLongA);
 	static LONG __stdcall IAT_SetWindowLongA(HWND hWnd, int nIndex, LONG dwNewLong)
 	{
 		if (hWnd == hWndApp && nIndex == GWL_STYLE)
@@ -30,7 +30,7 @@ namespace GOTHIC_NAMESPACE
 
 	// Remove WS_SYSMENU flag while creating a game window
 	static HWND __stdcall IAT_CreateWindowExA(DWORD dwExStyle, LPCSTR lpClassName, LPCSTR lpWindowName, DWORD dwStyle, int X, int Y, int nWidth, int nHeight, HWND hWndParent, HMENU hMenu, HINSTANCE hInstance, LPVOID lpParam);
-	auto Ivk_CreateWindowExA = CreateIATHook(GetModuleHandle(nullptr), "user32.dll", "CreateWindowExA", &IAT_CreateWindowExA);
+	auto Ivk_CreateWindowExA = CreateIATHook(nullptr, "user32.dll", "CreateWindowExA", &IAT_CreateWindowExA);
 	static HWND __stdcall IAT_CreateWindowExA(DWORD dwExStyle, LPCSTR lpClassName, LPCSTR lpWindowName, DWORD dwStyle, int X, int Y, int nWidth, int nHeight, HWND hWndParent, HMENU hMenu, HINSTANCE hInstance, LPVOID lpParam)
 	{
 		if (strcmp(lpClassName, "DDWndClass") == 0)

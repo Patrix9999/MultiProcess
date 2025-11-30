@@ -71,7 +71,7 @@ private:
 public:
 	IATHook(const HMODULE module, const char* target_dll, const char* func_name, const T detour, const InvokeType invokeType = InvokeType::kNormal)
 	{
-		this->module = module;
+		this->module = module ? module : GetModuleHandle(module);
 		this->target_dll = target_dll;
 		this->func_name = func_name;
 		this->detour = detour;
